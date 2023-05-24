@@ -11,12 +11,12 @@ class App extends React.Component {
     list2: [],
     minutes: 0,
     seconds: 0,
-    time:"",
+    time: "",
   };
- 
-componentDidMount=()=>{
-this.stoperica()
-}
+
+  componentDidMount = () => {
+    this.stoperica();
+  };
   handleSelectChange = (event) => {
     //
     this.setState({ selectedOption: event.target.value });
@@ -30,38 +30,44 @@ this.stoperica()
     if (this.state.selectedOption === "morocco") {
       this.setState({ maroco: this.state.maroco + 1 });
       const newList1 = this.state.list1;
-      newList1.push(this.state.igrac + " , " + this.state.time);
+      newList1.push(this.state.igrac + " , " + this.state.minutes);
       this.setState({ igrac: "", list1: newList1, selectedOption: "" });
       console.log(newList1, "1");
     } else {
       this.setState({ france: this.state.france + 1 });
       const newList2 = this.state.list2;
-      newList2.push(this.state.igrac + " , " + this.state.time);
+      newList2.push(this.state.igrac + " , " + this.state.minutes);
       this.setState({ igrac: "", list2: newList2, selectedOption: "" });
     }
   };
 
   stoperica = () => {
     setInterval(() => {
-      this.setState({ seconds: this.state.seconds++ });
-      if (this.state.seconds === 60) {
-        this.setState({ minutes: this.state.minutes++ });
-        this.setState({ seconds: (this.state.seconds = 0) });
+      var minutes = this.state.minutes;
+      var seconds = this.state.seconds;
+      seconds++;
+      if (seconds === 60) {
+        minutes++;
+        seconds = 0;
       }
-      let minuteToShow=this.state.minutes;
-      let secondsToShow=this.state.seconds;
-      if(this.state.seconds<10){
-        secondsToShow="0"+secondsToShow
+      var minutesToShow = minutes;
+      var secondsToShow = seconds;
+
+      if (seconds < 10) {
+        secondsToShow = "0" + secondsToShow;
       }
-      if(this.state.minutes<10){
-        this.state.minutes= "0"+  minuteToShow
+
+      if (minutes < 10) {
+        minutesToShow = "0" + minutesToShow;
       }
-      this.setState({time:this.state.time=minuteToShow + " : " + secondsToShow })
-    },1000);
+
+      this.setState({
+        minutes: minutes,
+        seconds: seconds,
+        time: minutesToShow + ":" + secondsToShow,
+      });
+    }, 1000);
   };
-  
-  
-  
 
   render() {
     const { selectedOption } = this.state; //
@@ -69,7 +75,6 @@ this.stoperica()
       <div className="page">
         <div className="time">
           <span id="time"> {this.state.time}</span>
-          
         </div>
 
         <div className="result" id="average">
