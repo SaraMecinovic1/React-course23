@@ -36,7 +36,7 @@ class App extends React.Component {
     } else {
       this.setState({ france: this.state.france + 1 });
       const newList2 = this.state.list2;
-      newList2.push(this.state.igrac + " , " + this.state.minutes);
+      newList2.push(this.state.igrac + " , " + this.state.minutes + 1);
       this.setState({ igrac: "", list2: newList2, selectedOption: "" });
     }
   };
