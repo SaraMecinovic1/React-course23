@@ -3,10 +3,11 @@ import likedIcon from "../components/heart.png";
 import unLikedIcon from "../components/heart-3.png";
 
 const Post = (props) => {
-  const isLikedByMe = props.post.likes.includes(props.myUserName);
-  let likeButton = unLikedIcon;
-  if (isLikedByMe) {
-    likeButton = likedIcon;
+  // props = { post: {...} }
+  const isPostLikedByMe = props.post.likes.includes(props.myUserName);
+  let likeButtonImg = unLikedIcon;
+  if (isPostLikedByMe) {
+    likeButtonImg = likedIcon;
   }
 
   return (
@@ -16,18 +17,28 @@ const Post = (props) => {
       </div>
       <div className="post-buttons">
         <button
-          className="post-likes"
           onClick={() => {
             props.likeHandler(props.post.id);
           }}
           style={{ paddingRight: "10px", paddingLeft: "10px" }}
         >
-          <img src={likeButton} width="10px" />
+          <img src={likeButtonImg} width="10px" />
         </button>
-        <button onClick={() => console.log("comments")}>Comment</button>
-        <button onClick={() => console.log("share")}>Share</button>
+        <button
+          onClick={() => {
+            console.log("Comment");
+          }}
+        >
+          Comment
+        </button>
+        <button
+          onClick={() => {
+            console.log("Share");
+          }}
+        >
+          Share
+        </button>
       </div>
-
       <div>
         <p className="post-likes">{props.post.likes.length} likes</p>
         <p className="post-description">
