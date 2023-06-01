@@ -4,14 +4,10 @@ import unLikedIcon from "../components/heart-3.png";
 import { useNavigate } from "react-router-dom";
 
 const Post = (props) => {
-  // props = { post: {...} }
-
-
   const navigate = useNavigate();
-  const goToDetails=()=>{
-    navigate("/postDetails",{state:props.post})
-  }
-
+  const goToDetails = () => {
+    navigate("/postDetails", { state: props.post });
+  };
 
   const isPostLikedByMe = props.post.likes.includes(props.myUserName);
   let likeButtonImg = unLikedIcon;
@@ -23,7 +19,9 @@ const Post = (props) => {
     <div className="post">
       <div>
         <img
-          onClick={() => {goToDetails()}}
+          onClick={() => {
+            goToDetails();
+          }}
           className="post-img"
           src={props.post.imageUrl}
         />
