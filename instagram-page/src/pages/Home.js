@@ -4,7 +4,7 @@ import mydata from "../data.json";
 import Post from "../components/Post";
 import { useState } from "react";
 
-function AllPosts() {
+function Home() {
   const [state, setState] = useState(mydata);
   const myUserName = "sara.mcnvc";
 
@@ -41,4 +41,4 @@ function AllPosts() {
   );
 }
 
-export default AllPosts;
+export default Home;

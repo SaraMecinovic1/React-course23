@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Post = (props) => {
   const navigate = useNavigate();
+
   const goToDetails = () => {
     navigate("/postDetails", { state: props.post });
   };
@@ -17,14 +18,12 @@ const Post = (props) => {
 
   return (
     <div className="post">
-      <div>
-        <img
-          onClick={() => {
-            goToDetails();
-          }}
-          className="post-img"
-          src={props.post.imageUrl}
-        />
+      <div
+        onClick={() => {
+          navigate("/details", { state: props.post });
+        }}
+      >
+        <img className="post-img" src={props.post.imageUrl} />
       </div>
       <div className="post-buttons">
         <button
