@@ -12,15 +12,15 @@ function BlogDetails() {
   const [searchParams, setSearchParams] = useSearchParams();   // [state,setState] //////////
   const location = useLocation();
 
-  console.log(location.state);  //////////
+  console.log( "LOCATION---" ,location.state);  //////////
 
   const goToAllBlogs = () => {
     navigate("/", { state: { test: "Hello world" } });  //da nas vrati na pocetnu
   };
 
-  console.log("id =", params.id);
-  console.log("title =", searchParams.get("postId"));   /////////////
-  //   console.log("userId =", params.userId);
+  console.log("id ---", params.id);
+  console.log("title ---", searchParams.get("postId"));   /////////////
+    // console.log("userId =", params.userId);
 
   return (
     <div>

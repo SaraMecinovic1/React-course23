@@ -4,12 +4,15 @@ import Home from "./pages/Home";
 import PostDetails from "./pages/InstagramPostDetails";
 
 function App() {
+  return(
+
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/postDetails" element={<PostDetails />}></Route>
     </Routes>
-  </BrowserRouter>;
+  </BrowserRouter>
+  )
 }
 
 export default App;

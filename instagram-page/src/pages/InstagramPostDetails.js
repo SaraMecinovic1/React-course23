@@ -1,12 +1,24 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function PostDetails() {
   const location = useLocation();
+  const navigate = useNavigate;
+  console.log("LOCATION---", location.state);
 
-  console.log(location.state);
+  return (
+    <div>
+      <h1> POST DETAILS</h1>
 
-  return <div>PostDetails</div>;
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        CLICK ME TO BACK
+      </button>
+    </div>
+  );
 }
 
 export default PostDetails;

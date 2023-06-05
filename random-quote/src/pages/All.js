@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const All = () => {
   const [state, setState] = useState([]);
 
-  useEffect =
+  useEffect 
     (() => {
       fetch("https://js-course-server.onrender.com/quotes/get-all-quotes")
         .then((res) => res.json())
@@ -17,6 +17,12 @@ const All = () => {
     []);
   console.log(state);
 
-  return <div className="all-quotes">AllQuotes</div>;
+  return <div className="all-quotes">
+   {state.map((quote,index)=>{
+return(
+  <p> <i>{}</i></p>
+)
+   })}
+  </div>;
 };
 export default All;

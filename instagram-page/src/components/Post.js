@@ -20,10 +20,10 @@ const Post = (props) => {
     <div className="post">
       <div
         onClick={() => {
-          navigate("/details", { state: props.post });
+         goToDetails()
         }}
       >
-        <img className="post-img" src={props.post.imageUrl} />
+        <img className="post-img" alt="Portret osobe s osmijehom" src={props.post.imageUrl} />
       </div>
       <div className="post-buttons">
         <button
@@ -32,7 +32,7 @@ const Post = (props) => {
           }}
           style={{ paddingRight: "10px", paddingLeft: "10px" }}
         >
-          <img src={likeButtonImg} width="10px" />
+          <img src={likeButtonImg} alt="Portret osobe s osmijehom" width="10px" />
         </button>
         <button
           onClick={() => {
