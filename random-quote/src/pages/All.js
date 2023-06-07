@@ -5,9 +5,10 @@ const All = () => {
   const [state, setState] = useState([]);
   const navigate = useNavigate;
 
-const goTo=(props)=>{
-  navigate("/", + props , "")
-}
+  const goTo = (props) => {
+    navigate("/details", +props, "");
+    console.log("radi")
+  };
 
   useEffect(() => {
     fetch("https://js-course-server.onrender.com/quotes/get-all-quotes")
@@ -19,44 +20,34 @@ const goTo=(props)=>{
         console.log(error);
       });
   }, []);
-  console.log(state);
+  // console.log(state , "state");
 
   return (
     <div className="all-quotes">
       <div>
         {state.map((quote, index) => {
           return (
-           <div className="card"> 
-            
+            <div className="card" key={index}>   
               <h3>
-               
                 <i>{quote.quoteText}</i>
               </h3>
-            
-            <p>{quote.quoteAuthor}</p>
-            <p>{quote.quoteSource}</p>
-            
+              <p>{quote.quoteAuthor}</p>
+              <p>{quote.quoteSource}</p>
               <div className="goto">
                 <button
                   onClick={() => {
-                   goTo(quote._id)
-                   console.log(quote._id , "-----")
+                    goTo(quote._id);
+                    console.log(quote._id, "-----");
                   }}
                 >
                   Details
                 </button>
 
-                <button
-                  onClick={() => {
-                    // navigate("/details/qoute_id");
-                    console.log("likes");
-                  }}
-                >
-                  Likes
-                </button>
-           </div>
+                <button onClick={() => {
+                  navigate("/edit")
+                }}>Edit</button>
               </div>
-            
+            </div>
           );
         })}
       </div>
