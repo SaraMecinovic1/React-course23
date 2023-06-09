@@ -1,20 +1,26 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import React from "react";
+import "../App.css";
 
 const Details = () => {
-  const [state, setState] = useState([]);
-  const params = useParams;
+  const [state, setState] = useState({});
+  const params = useParams();
+
+  console.log(params ,"params");
 
   const oneQuote = () => {
-    fetch("https://js-course-server.onrender.com/quotes/get-quote" + params.id)
+    fetch(`https://js-course-server.onrender.com/quotes/get-quote/${params.id}`)
       .then((data) => {
         data.json();
       })
-      .then((data) => {
-        setState(data);
+      .then((res) => {
+        setState(res);  //obj===citat
+        console.log(res, "data");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -24,13 +30,9 @@ const Details = () => {
   const giveLike = () => {
     fetch("https://js-course-server.onrender.com/quotes/like" + params.id, {
       method: "PATCH",
-      headers: {
-        Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpZCI6IjYzZDQyMTM5OWZhZjUyMDAzNDFmYzE1NSIsImZ1bGxOYW1lIjoiVGVzdCIsImlzQWRtaW4iOmZhbHNlLCJpc0d1ZXN0IjpmYWxzZSwiaWF0IjoxNjg1OTg3NjM0LCJleHAiOjE3MTc1MjM2MzR9.oiaPjkSZC3YE9mIzguobRvD89233KTyaknavqDbn85A",
-      },
     })
-      .then((data) => data.json)
-      .then((data) => oneQuote())
+      .then((data) => data.json())
+      .then((data) => setState(data))
       .catch((err) => console.log(err));
   };
 
@@ -38,7 +40,6 @@ const Details = () => {
     <div className="all-quotes">
       <div className="card">
         <h3>
-         
           Quote:
           <i> {state.quoteText}</i>
         </h3>
@@ -46,18 +47,23 @@ const Details = () => {
         <p>Author: {state.quoteAuthor}</p>
         <p> Likes: {state.likes}</p>
 
-        <div className="goto">
-          <button
-            onClick={() => {
-              giveLike();
-              console.log("likes");
-            }}
-          >
-            Likes
-          </button>
-        </div>
+        <button
+          onClick={() => {
+            giveLike();
+            console.log("likes");
+          }}
+        >
+          Likes
+        </button>
+        <button
+          onClick={() => {
+           
+            console.log("edit");
+          }}
+        >
+          Edit
+        </button>
       </div>
-      );
     </div>
   );
 };
