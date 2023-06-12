@@ -1,5 +1,5 @@
 import React from "react";
-
+import "../App.css"
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";

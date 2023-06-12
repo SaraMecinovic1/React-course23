@@ -7,15 +7,15 @@ const Details = () => {
   const [state, setState] = useState({});
   const params = useParams();
 
-  console.log(params ,"params");
+  console.log(params, "params");
 
   const oneQuote = () => {
     fetch(`https://js-course-server.onrender.com/quotes/get-quote/${params.id}`)
       .then((data) => {
-        data.json();
+        return data.json();
       })
       .then((res) => {
-        setState(res);  //obj===citat
+        setState(res); //obj===citat
         console.log(res, "data");
       })
       .catch((err) => {
@@ -57,7 +57,6 @@ const Details = () => {
         </button>
         <button
           onClick={() => {
-           
             console.log("edit");
           }}
         >
