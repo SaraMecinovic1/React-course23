@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const All = () => {
   const [state, setState] = useState([]);
+  console.log(state)
   const navigate = useNavigate();
 
   const goTo = (props) => {

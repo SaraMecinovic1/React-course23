@@ -6,6 +6,7 @@ import Details from "./pages/Details";
 import Edit from "./pages/Edit";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import AddQuote from "./pages/AddQuote";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/addNew" element={<AddQuote />} />
       </Routes>
     </BrowserRouter>
   );

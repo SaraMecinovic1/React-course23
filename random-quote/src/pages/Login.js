@@ -4,55 +4,69 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 
-const loginSchema = yup.object({       // shema === nase validacije,pravila za prijavu,sta mora da sadrzi da bi bilo true
-  email: yup.string().required("Nedostaje email").email("Email nije dobar"),
-  password: yup.string().required().min(6).max(50),
+const loginSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email je obavezno polje, unesite email")
+    .email("Email format nije dobar"),
+  // .matches(
+  //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!.,#]).+$/i,
+  //   "Email moze da sadrzi samo slova, brojeve i tacku"
+  // )
+  password: yup
+    .string()
+    .required("Sifra je obavezno polje, unesite sifru")
+    .min(6, "Sifra mora da ima najmanje 6 karaktera")
+    .max(50, "Sifra mora da ima najvise 50 karaktera"),
+  // .matches(
+  //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!.,#]).+$/i,
+  //   "Nije dobra sifra"
+  // ),
 });
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const submitForm = (values) => {
+    fetch("https://js-course-server.onrender.com/user/login", {
+      method: "POST",
+      body: JSON.stringify(values),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message);
+        }
+
+        if (data.token) {
+          localStorage.setItem("authToken", data.token);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="login-wrapper">
       <Formik
-        initialValues={{ email: "", password: "" }}  // pocetne vrednosti
-        onSubmit={(values, actions) => {  // values=trenutne vrijednosti polja forme(email...) actions= manipulacija validacijama
-          fetch("https://js-course-server.onrender.com/user/login", {  //saljemo zahtev na server
-            method: "POST",
-            body: JSON.stringify(values),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.token) {  //ako smo dobili token sa servera da me prebaci na pocetnu str
-                navigate("/");
-              }
-            });
-            
-        }}
+        initialValues={{ email: "", password: "" }}
         validationSchema={loginSchema}
-        // validate={(values) => {
-        //   const errors = {};
-        //   if (
-        //     !values.error ||
-        //     values.error.length < 10 ||
-        //     values.error.length > 100
-        //   ) {
-        //     errors.email = "Neispravan email";
-        //   }
-        //   return errors;
-        // }}
+        onSubmit={(values, actions) => {
+          submitForm(values);
+        }}
       >
         {({
-        // FUNKCIJE:
-          values, // formikov state, trenutne vrijednosti polja forme
-          errors, // errors = { email: 'Neispravan email' }
-          touched, // touched = { email: true } //ako smo pretisnuli input
-          handleChange, // azurira values(vrednost polja kao onChange funk) //kad hocemo da pozovemo nju pozivamo je u onChange funk kao arg
+          values, // formikov state => { email: "", password: "" }
+          errors, // errors = { email: 'Neispravan email', password: 'Password is required field' }
+          touched, // touched = { email: true }
+          handleChange,
           handleBlur,
-          handleSubmit, // manipulator onSubmit funk
+          handleSubmit,
         }) => (
           <div>
             <button
@@ -64,7 +78,6 @@ const Login = () => {
             >
               Console log states
             </button>
-             
             <div>
               <input
                 type="email"
@@ -74,8 +87,7 @@ const Login = () => {
                 value={values.email}
               />
               <p className="error-message">
-                {errors.email && touched.email && errors.email}  
-                 {/* ako postoji greska u "errors.emal" i ako je taknuto  */}
+                {errors.email && touched.email && errors.email}
               </p>
             </div>
             <div>
