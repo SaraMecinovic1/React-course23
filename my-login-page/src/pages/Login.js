@@ -68,7 +68,7 @@ const Login = () => {
           <div className="page1">
             <div className="deo1">
               <h1>Login to Your Account</h1>
-              <div className="card">
+              <div className="card1">
                 <input
                   placeholder="Email"
                   type="email"

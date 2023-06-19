@@ -1,5 +1,4 @@
 import { Formik } from "formik";
-import "./App.css";
 import * as yup from "yup";
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

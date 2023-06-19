@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.allInfo{
+    width: 100%;
+  height: 100vh;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ 
+}
+.card{
+    border: 1px solid  rgba(13, 11, 13, 0.041);
+    width: 340px;
+    height: 360px;
+    border-radius: 20px;
+    background-color: rgba(207, 161, 207, 0.5); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    
+  }
+  .card h1{
+    margin-bottom: 20px;
+  }
+  .card input{
+    width: 240px;
+    height: 35px;
+   background-color: rgb(68, 68, 112);
+   margin: 10px 10px;
+   color: white;
+   padding-left: 10px;
+   border:  1px solid  rgb(68, 68, 112);
+  }
+  .butt2{
+    width: 200px;
+    border: 1px solid  rgb(119, 119, 160);
+    background-color: rgb(118, 118, 168);
+  }
+  .error-message {
+    font-size: 10px;
+    color: red;
+    margin-left: 10px;
+  }
