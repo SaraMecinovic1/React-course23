@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import "../App.css";
 
 const Details = () => {
   const [state, setState] = useState({});
   const params = useParams();
+  const navigate=useNavigate()
 
   console.log(params, "params");
 
@@ -57,7 +58,7 @@ const Details = () => {
         </button>
         <button
           onClick={() => {
-            console.log("edit");
+          navigate("/edit")
           }}
         >
           Edit
