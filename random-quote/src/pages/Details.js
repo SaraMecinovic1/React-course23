@@ -28,13 +28,17 @@ const Details = () => {
     oneQuote();
   }, []);
 
-  const giveLike = () => {
-    fetch("https://js-course-server.onrender.com/quotes/like" + params.id, {
+  const likeHandler = () => {
+    fetch("https://js-course-server.onrender.com/quotes/like/" + params.id, {
       method: "PATCH",
     })
-      .then((data) => data.json())
-      .then((data) => setState(data))
-      .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((data) => {
+        setState(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -50,7 +54,7 @@ const Details = () => {
 
         <button
           onClick={() => {
-            giveLike();
+            likeHandler();
             console.log("likes");
           }}
         >
@@ -63,6 +67,14 @@ const Details = () => {
         >
           Edit
         </button>
+        <button
+          onClick={() => {
+          navigate("/favorite")
+          }}
+        >
+         Add to favorites
+        </button>
+        
       </div>
     </div>
   );

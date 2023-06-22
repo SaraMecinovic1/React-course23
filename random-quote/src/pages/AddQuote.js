@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -27,6 +28,10 @@ const AddQuote = () => {
   const token = localStorage.getItem("authToken");
   const [categories, setCategories] = useState([]);
 
+  const clearAllCategories = () => {
+    setCategories([]);
+  };
+
   useEffect(() => {
     fetch("https://js-course-server.onrender.com/category/get-all")
       .then((res) => res.json())
@@ -50,7 +55,6 @@ const AddQuote = () => {
           alert(data.message);
         } else {
           alert("Uspesno");
-          navigate("/");
         }
       })
       .catch((err) => {
@@ -74,6 +78,7 @@ const AddQuote = () => {
         validationSchema={newQuoteSchema}
         onSubmit={(values, actions) => {
           submitForm(values);
+          // actions.resetForm();
         }}
       >
         {({

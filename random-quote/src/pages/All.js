@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { authSlice } from "../store/authSlice";
+import { quoteSlice } from "../store/quoteSlice";
 
 const All = () => {
-  const [state, setState] = useState([]);
-  console.log(state)
+  const [quote, setQuote] = useState([]);
+  const authState = useSelector((state) => state.auth); // uzimamo state iz authSlice
+  const dispatch = useDispatch(); // poziva funk
   const navigate = useNavigate();
+  console.log(quote);
 
   const goTo = (props) => {
-    navigate(`/details/${props}`);  //gde da me povede i id tog citata
+    navigate(`/details/${props}`); //gde da me povede i id tog citata
     console.log("radi");
   };
 
@@ -15,47 +20,84 @@ const All = () => {
     fetch("https://js-course-server.onrender.com/quotes/get-all-quotes")
       .then((res) => res.json())
       .then((data) => {
-        setState(data); //dajemo statu vrednost objekta tj tih citata
+        console.log(data);
+        setQuote(data); //dajemo statu vrednost objekta tj tih citata
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
-  // console.log(state , "state");
+  // console.log(quote , "state");
 
   return (
     <div className="all-quotes">
-      <div>
-        {state.map((quote, index) => {
-          return (
-            <div className="card" key={index}>
-              <h3>
-                <i>{quote.quoteText}</i>
-              </h3>
-              <p>{quote.quoteAuthor}</p>
-              
-              <div className="goto">
-                <button
-                  onClick={() => {
-                    goTo(quote._id);
-                    console.log(quote._id, "-----");
-                  }}
-                >
-                  Details
-                </button>
-
-                <button
-                  onClick={() => {
-                    navigate("/edit");
-                  }}
-                >
-                  Edit
-                </button>
-              </div>
-            </div>
-          );
-        })}
+      <div className="header">
+        {/* <p>Favorite quotes: {quoteState?.favorites.length}</p> */}
+        <button
+          onClick={() => {
+            navigate("/favorite");
+            console.log("favorites");
+          }}
+        >
+          Go to favorites
+        </button>
       </div>
+      {authState.id ? ( //ako je ulogovan
+        <button
+          onClick={() => {
+            dispatch(authSlice.actions.logout()); // pozovomo action(funk) "logout "
+          }}
+        >
+          Logout
+        </button>
+      ) : (
+        // ako nije ulogovan
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          Login
+        </button>
+      )}
+      {quote.map((quote, index) => {
+        return (
+          <div className="card" key={index}>
+            <h3>
+              <i>{quote.quoteText}</i>
+            </h3>
+            <p>{quote.quoteAuthor}</p>
+
+            <div className="goto">
+              <button
+                onClick={() => {
+                  goTo(quote._id);
+                  console.log(quote._id, "-----");
+                }}
+              >
+                Details
+              </button>
+
+              <button
+                onClick={() => {
+                  navigate("/edit");
+                }}
+              >
+                Edit
+              </button>
+
+              <button
+                onClick={() => {
+                  dispatch(quoteSlice.actions.setFavorite(quote));
+                  console.log("add to favorites");
+                }}
+              >
+                Favorite
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
