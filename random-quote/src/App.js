@@ -19,7 +19,7 @@ const NavigationRoutes = () => {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(token); // dekoduj mi token
       dispatch(authSlice.actions.setData(decoded));
     }
   }, []);

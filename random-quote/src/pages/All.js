@@ -7,6 +7,7 @@ import { quoteSlice } from "../store/quoteSlice";
 const All = () => {
   const [quote, setQuote] = useState([]);
   const authState = useSelector((state) => state.auth); // uzimamo state iz authSlice
+  const quoteState = useSelector((state) => state.quote);
   const dispatch = useDispatch(); // poziva funk
   const navigate = useNavigate();
   console.log(quote);
@@ -21,7 +22,7 @@ const All = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setQuote(data); //dajemo statu vrednost objekta tj tih citata
+        setQuote(data); //dajemo state-u vrednost objekta tj tih citata
       })
       .catch((error) => {
         console.log(error);
@@ -32,7 +33,7 @@ const All = () => {
   return (
     <div className="all-quotes">
       <div className="header">
-        {/* <p>Favorite quotes: {quoteState?.favorites.length}</p> */}
+        <p>Favorite quotes: {quoteState.favorites.length }</p> 
         <button
           onClick={() => {
             navigate("/favorite");
@@ -88,7 +89,7 @@ const All = () => {
 
               <button
                 onClick={() => {
-                  dispatch(quoteSlice.actions.setFavorite(quote));
+                  dispatch(quoteSlice.actions.setFavorite(quote)); //ovo sto je u zagradu funkcije je payload(podatak)
                   console.log("add to favorites");
                 }}
               >

@@ -13,7 +13,7 @@ export const authSlice = createSlice({
   reducers: {
     setData(state, actions) {
       const data = actions.payload;
-      state = data;
+      state = data;  //state===tim podacima
       return state;
     },
     logout(state, actions) {
