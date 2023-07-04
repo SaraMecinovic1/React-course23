@@ -9,11 +9,10 @@ const Counter = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const countState = useSelector((state) => state.counter);
-  
   const navigate = useNavigate();
 
-  console.log(countState, "counterState");
-  console.log(authState, "authState");
+  // console.log(countState, "counterState");
+  // console.log(authState, "authState");
 
 
   return (

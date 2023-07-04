@@ -4,6 +4,8 @@ import "../App.css";
 import * as yup from "yup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {TextField, Button} from "@mui/material"
+
 
 const Shema = yup.object({
   email: yup
@@ -65,14 +67,16 @@ const Login = () => {
             <div className="deo1">
               <h1>Login to Your Account</h1>
               <div className="card1">
-                <input
+                <TextField
+                label
                   placeholder="Email"
                   type="email"
                   name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.email}
-                ></input>
+                ></TextField>
+              
                 <p className="error-message">
                   {errors.email && touched.email && errors.email}
                 </p>
