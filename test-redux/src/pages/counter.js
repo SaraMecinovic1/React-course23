@@ -9,9 +9,11 @@ const Counter = () => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.auth);
   const countState = useSelector((state) => state.counter);
-  const saveNum = useSelector((state) => state.counter.num);
+  
   const navigate = useNavigate();
 
+  console.log(countState, "counterState");
+  console.log(authState, "authState");
 
 
   return (
@@ -60,20 +62,12 @@ const Counter = () => {
           className="btn1"
           onClick={() => {
             if (authState.id) {
-              console.log(
-                "Ime:",
-                authState.fullName,
-                "|",
-                " Email:",
-                authState.email,
-                "|",
-                "Datum:",
-                new Date().toLocaleDateString(),
-                "|",
-                saveNum
-              );
-
-
+             dispatch(countSlice.actions.saveValue({
+              fullname: authState.fullName,                     
+               id: authState.id,
+              
+             }))
+             console.log("saved");
             }
           }}
         >

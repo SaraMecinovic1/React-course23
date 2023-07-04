@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Login from "./pages/login"
 import Signup from './pages/signup';
 import Counter from './pages/counter';
+import Saved from './pages/saved';
 import { store } from './store/store';
 
 const NavigationRoutes=()=>{
@@ -18,13 +19,14 @@ const NavigationRoutes=()=>{
       const decoded = jwtDecode(token); 
       dispatch(authSlice.actions.setData(decoded));   ///
     }
-  },[])
+  },[dispatch])
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/saved" element={<Saved />} />
       </Routes>
     </BrowserRouter>
   );

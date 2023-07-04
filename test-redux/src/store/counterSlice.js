@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   num: 0,
+  saved: []
 };
 
 export const countSlice = createSlice({
@@ -17,9 +18,14 @@ export const countSlice = createSlice({
       return state;
     },
     saveValue(state, actions) {
-      const saveNum = state.num;
-      // const trenutniDatum = new Date().toLocaleDateString();
-     
+      const userData = actions.payload; // {fullName: '...', id: '....'}
+      const item = {
+        counter: state.num,
+        user: userData,
+        date: new Date().toISOString(),
+      };
+      state.num = 0;
+      state.saved.push(item);
       return state;
     },
   },
