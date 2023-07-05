@@ -3,10 +3,11 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgb(196, 152, 237);
 }
 .card{
   width: 300px;
-  height: 400px;
+  height: 200px;
   border: 1px solid black;
   margin-top: 30px;
   padding-top: 40px;
@@ -14,4 +15,31 @@ body{
 input{
   height: 40px;
   width: 200px;
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.list button{
+  width: 390px;
+  height: 40px;
+  border: 1px solid rgb(196, 152, 237);
+  border-radius: 5px;
+  margin: 22px 30px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+align-items: center;
+  padding-left: 10px;
+  
+}
+.p{
+  text-align: left;
+  margin-left: 25px;
+}
+#numberOfItems{
+font-size: 20px;
+color:  rgb(188, 133, 238);
 }
