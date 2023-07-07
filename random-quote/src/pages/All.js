@@ -16,6 +16,8 @@ import { themeSlice } from "../store/themeSlice";
 
 const All = () => {
   const [quote, setQuote] = useState([]);
+  const theme = useTheme();
+
     const authState = useSelector((state) => state.auth); // uzimamo state iz authSlice
   const quoteState = useSelector((state) => state.quote);
   const themeState = useSelector((state) => state.theme);
@@ -43,7 +45,7 @@ const All = () => {
   // console.log(quote , "state");
 
   return (
-    <div className="all-quotes">
+    <div style={{ backgroundColor: theme.palette.background }}className="all-quotes">
 
       <div className="header">
           <Typography variant="h5" component="h5">
