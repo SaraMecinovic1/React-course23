@@ -4,7 +4,7 @@ import { store } from "./store/store";
 import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { authSlice } from "./store/authSlice";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Details from "./pages/Details";
 import Edit from "./pages/Edit";
@@ -12,9 +12,16 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AddQuote from "./pages/AddQuote";
 import Favorites from "./pages/Favorites";
+import { ThemeProvider } from "@mui/material";
+import { DarkTheme } from "./styles/DarkTheme";
+import { LightTheme } from "./styles/LightTheme";
+import { themeSlice } from "./store/themeSlice";
 
 const NavigationRoutes = () => {
   const dispatch = useDispatch();
+  const themeState = useSelector((state) => state.theme);
+  const selectedTheme = themeState.theme === "light" ? LightTheme : DarkTheme;
+
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -25,6 +32,7 @@ const NavigationRoutes = () => {
   }, []);
 
   return (
+    <ThemeProvider theme={selectedTheme}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<All />} />
@@ -36,6 +44,8 @@ const NavigationRoutes = () => {
         <Route path="/favorite" element={<Favorites />} />
       </Routes>
     </BrowserRouter>
+
+    </ThemeProvider>
   );
 };
 
