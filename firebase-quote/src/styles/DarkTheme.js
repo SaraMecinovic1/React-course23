@@ -40,10 +40,10 @@ import { green, grey, purple } from "@mui/material/colors";
 export const DarkTheme = createTheme({
   palette: {
     primary: {
-      main: green[700],
+      main: green[100],
     },
     secondary: {
-      main: green[700],
+      main: green[500],
     },
     background: grey[700],
     text: {
