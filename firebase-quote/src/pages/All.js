@@ -18,19 +18,17 @@ import { getQuotes } from "../firebase";
 
 const All = () => {
   const [quote, setQuote] = useState([]);
-  
   const dispatch = useDispatch(); // poziva funk
   const navigate = useNavigate();
   console.log(quote);
 
-  const goTo = (props) => {
-    navigate(`/details/${props}`); //gde da me povede i id tog citata
+  const goTo = () => {
+    navigate("/quote/" + quote.id); //gde da me povede i id tog citata
     console.log("radi");
   };
 
   useEffect(() => {
    getQuotes()
-      .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setQuote(data); //dajemo state-u vrednost objekta tj tih citata
@@ -44,21 +42,20 @@ const All = () => {
 <Layout>
   <Grid container spacing={2} >
   
-        {quote.map((quote, index) => {
+        {quote.map((qunpmote, index) => {
           return (
             <Card sx={{ minWidth: 275 ,marginBottom:5,marginTop:2, marginLeft:5 }}>
             <CardContent>
               <Typography  variant="h6" component="h6" color="text.secondary" gutterBottom>
-               Quote: {quote.quoteText}
+               Quote: {quote.Quote}
               </Typography>
               <Typography variant="h7" component="div">
-              Author: {quote.quoteAuthor}
+              Author: {quote.Author}
               </Typography>
             </CardContent>
             <CardActions>
               <Button size="small"  onClick={() => {
-                  goTo(quote._id);
-                  console.log(quote._id, "-----");
+                  goTo();
             }}>Details</Button>
               <Button size="small"  onClick={() => {
                   navigate("/edit");

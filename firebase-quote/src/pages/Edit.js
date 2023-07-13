@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { getQuoteById, updateQuoteData } from "../firebase" 
+
 
 const editQuoteSchema = yup.object({
   quoteText: yup
@@ -26,7 +27,6 @@ const editQuoteSchema = yup.object({
 const Edit= () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
-  const [categories, setCategories] = useState([]);
   const params = useParams();
   const [quote, setQuote] = useState({
     quoteText: "",
@@ -36,44 +36,32 @@ const Edit= () => {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {  //uzimamo kategorije sa servera
-    fetch("https://js-course-server.onrender.com/category/get-all")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, []);
 
-  useEffect(() => {  //uzimamo vrednosti tog citata sa servera i popunjamo ih na nase prazne stringove
-    fetch("https://js-course-server.onrender.com/quotes/get-quote/" + params.id)
-      .then((res) => res.json())
-      .then((data) => {
-        setQuote(data);
-        setIsLoading(false);
-      });
-  }, []);
-
-  const submitForm = (values) => {  //saljemo nase izmenjene vrednosti
-    fetch("https://js-course-server.onrender.com/quotes/edit/" + params.id, {
-      method: "PATCH",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          alert(data.message);
-        } else {
-          alert("Uspesno");
-          navigate("/");
-        }
+  const getQuoteData = () => {
+    setIsLoading(true);  //dok ne dobijemo podatke da se pojavi spiner
+    getQuoteById(params.id) //funk koja uzima tr id citata
+      .then((data) => {  //dobijene podatke 
+        setIsLoading(false); //uskljuci se spiner
+        delete data.id;  //izbrisemo id 
+        setQuote(data);  // promenimo stanje stata na nove podatke
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
       });
+  };
+  useEffect(()=>{
+    getQuoteById()
+  },[])
+
+  const submitForm = async (values) => {  //saljemo nase izmenjene vrednosti
+   setIsLoading(true)
+   try{
+    await updateQuoteData(params.id,values)
+    getQuoteData()
+   }finally{
+    setIsLoading(false)
+   }
   };
 
   if (!token) {
@@ -152,28 +140,7 @@ const Edit= () => {
                     errors.quoteSource}
                 </p>
               </div>
-              <div>
-                <p>Category</p>
-                <select
-                  name="category"
-                  onChange={handleChange}
-                  value={values.category}
-                >
-                  <option value={""} disabled={true}>
-                    -- Izaberi kategoriju --
-                  </option>
-                  {categories.map((item, index) => (
-                    <option key={index} value={item._id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-                <p className="error-message">
-                  {errors.category && touched.category && errors.category}
-                </p>
-              </div>
-
-              
+    
               <button onClick={handleSubmit} type="button">
                 Submit
               </button>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import React from "react";
 import "../App.css";
+import { deleteQuote, getQuoteById, likeQuote } from "../firebase";
 
 const Details = () => {
   const [state, setState] = useState({});
@@ -10,29 +11,8 @@ const Details = () => {
 
   console.log(params, "params");
 
-  const oneQuote = () => {
-    fetch(`https://js-course-server.onrender.com/quotes/get-quote/${params.id}`)
-      .then((data) => {
-        return data.json();
-      })
-      .then((res) => {
-        setState(res); //obj===citat
-        console.log(res, "data");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    oneQuote();
-  }, []);
-
-  const likeHandler = () => {
-    fetch("https://js-course-server.onrender.com/quotes/like/" + params.id, {
-      method: "PATCH",
-    })
-      .then((res) => res.json())
+const getQuoteData = () => {
+    getQuoteById(params.id)
       .then((data) => {
         setState(data);
       })
@@ -41,15 +21,39 @@ const Details = () => {
       });
   };
 
+  useEffect(() => {
+getQuoteData()
+  }, []);
+
+  const likeHandler = () => {
+    likeQuote(params.id, state.likes + 1)
+      .then(() => {
+        getQuoteData();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const deleteQuoteHandler = async () => {
+    try {
+      await deleteQuote(params.id);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <div className="all-quotes">
       <div className="card">
         <h3>
           Quote:
-          <i> {state.quoteText}</i>
+          <i> {state.Quote}</i>
         </h3>
 
-        <p>Author: {state.quoteAuthor}</p>
+        <p>Author: {state.Author}</p>
         <p> Likes: {state.likes}</p>
 
         <button
@@ -73,6 +77,14 @@ const Details = () => {
           }}
         >
          Add to favorites
+        </button>
+
+        <button
+          onClick={() => {
+          deleteQuoteHandler()
+          }}
+        >
+         Delete
         </button>
         
       </div>

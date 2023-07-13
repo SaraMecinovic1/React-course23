@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
+import { addQuote } from "../firebase";
+
 
 const newQuoteSchema = yup.object({
   quoteText: yup
@@ -26,42 +27,16 @@ const newQuoteSchema = yup.object({
 const AddQuote = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
-  const [categories, setCategories] = useState([]);
 
-  const clearAllCategories = () => {
-    setCategories([]);
-  };
-
-  useEffect(() => {
-    fetch("https://js-course-server.onrender.com/category/get-all")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, []);
-
-  const submitForm = (values) => {
-    fetch("https://js-course-server.onrender.com/quotes/add-quote", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          alert(data.message);
-        } else {
-          alert("Uspesno");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  const submitForm = async (values) => {
+    try{
+      await addQuote(values)
+      alert("Uspesno");
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
   if (!token) {
     return <Navigate to={"/login"} replace={true} />;
   }
@@ -78,6 +53,7 @@ const AddQuote = () => {
         validationSchema={newQuoteSchema}
         onSubmit={(values, actions) => {
           submitForm(values);
+          console.log(values)
           // actions.resetForm();
         }}
       >
@@ -133,36 +109,14 @@ const AddQuote = () => {
                   errors.quoteSource}
               </p>
             </div>
-            <div>
-              <p>Category</p>
-              <select
-                name="category"
-                onChange={handleChange}
-                value={values.category}
-              >
-                <option value={""} disabled={true}>
-                  -- Izaberi kategoriju --
-                </option>
-                {categories.map((item, index) => (
-                  <option key={index} value={item._id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-              <p className="error-message">
-                {errors.category && touched.category && errors.category}
-              </p>
-            </div>
+          
 
-            {/* <button
-              onClick={() => {
-                console.log(values, "values");
-              }}
-              type="button"
-            >
-              Show values
-            </button> */}
-            <button onClick={handleSubmit} type="button">
+            
+            <button onClick={()=>{
+              handleSubmit() 
+              console.log("radi")
+             
+            }} type="button">
               Submit
             </button>
           </div>
