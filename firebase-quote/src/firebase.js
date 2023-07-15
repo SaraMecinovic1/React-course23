@@ -40,7 +40,7 @@ export const getQuotes = async () => {
 
   export const likeQuote = async (id, likes) => {
     const docRef = doc(db, "quotes", id);
-    return await updateDoc(docRef, { likes: likes });
+    return await updateDoc(docRef, { likes: likes });   //updateDoc ===koristi se za ažuriranje postojećeg dokumenta u Firebase Firestore bazi podataka
   };
   
   export const updateQuoteData = async (id, data) => {
