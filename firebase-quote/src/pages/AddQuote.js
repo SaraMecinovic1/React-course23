@@ -4,7 +4,6 @@ import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
 import { addQuote } from "../firebase";
 
-
 const newQuoteSchema = yup.object({
   quoteText: yup
     .string()
@@ -21,7 +20,6 @@ const newQuoteSchema = yup.object({
     .required("quoteSource je obavezno polje")
     .min(4, "quoteSource mora da ima najmanje 6 karaktera")
     .max(200, "quoteSource mora da ima najvise 50 karaktera"),
-  category: yup.string().required("Category je obavezno polje"),
 });
 
 const AddQuote = () => {
@@ -29,14 +27,13 @@ const AddQuote = () => {
   const token = localStorage.getItem("authToken");
 
   const submitForm = async (values) => {
-    try{
-      await addQuote(values)
+    try {
+      await addQuote(values);
       alert("Uspesno");
-    }
-    catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
   if (!token) {
     return <Navigate to={"/login"} replace={true} />;
   }
@@ -51,18 +48,12 @@ const AddQuote = () => {
           category: "",
         }}
         validationSchema={newQuoteSchema}
-        onSubmit={(values, actions) => {
-          submitForm(values);
-          console.log(values)
-          // actions.resetForm();
-        }}
-      >
+        onSubmit={(values) => submitForm(values)}>
         {({
           values, // formikov state => { email: "", password: "" }
           errors, // errors = { email: 'Neispravan email', password: 'Password is required field' }
           touched, // touched = { email: true }
           handleChange,
-          handleBlur,
           handleSubmit,
         }) => (
           <div>
@@ -71,8 +62,7 @@ const AddQuote = () => {
               <input
                 type="text"
                 name="quoteText"
-                onChange={handleChange}
-                onBlur={handleBlur}
+                onChange={handleChange("quoteText")}
                 value={values.quoteText}
               />
               <p className="error-message">
@@ -84,8 +74,7 @@ const AddQuote = () => {
               <input
                 type="text"
                 name="quoteAuthor"
-                onChange={handleChange}
-                onBlur={handleBlur}
+                onChange={handleChange("quoteAuthor")}
                 value={values.quoteAuthor}
               />
               <p className="error-message">
@@ -99,8 +88,7 @@ const AddQuote = () => {
               <input
                 type="text"
                 name="quoteSource"
-                onChange={handleChange}
-                onBlur={handleBlur}
+                onChange={handleChange("quoteSource")}
                 value={values.quoteSource}
               />
               <p className="error-message">
@@ -109,14 +97,8 @@ const AddQuote = () => {
                   errors.quoteSource}
               </p>
             </div>
-          
 
-            
-            <button onClick={()=>{
-              handleSubmit() 
-              console.log("radi")
-             
-            }} type="button">
+            <button type="submit" onClick={handleSubmit}>
               Submit
             </button>
           </div>

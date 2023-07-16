@@ -1,3 +1,8 @@
+body{
+  margin: 0;
+  padding: 0;
+}
+
 .page1{
   height: 100vh;
   width: 100%;
@@ -8,9 +13,76 @@
 }
 
 .card{
-  width: 600px;
+  width: 500px;
   height: 700px;
   display: flex;
   border: 1px solid black;
   
 }
+.personIcon{
+  width: 200px;
+  height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+
+}
+.gender{
+  width: 200px;
+ height: 100px;
+margin-bottom: 0px;
+margin-top: 45px;
+   
+  
+}
+.gender h3{
+  padding: 0;
+margin-bottom: 10px;
+}
+.genders{
+  width: 200px;
+  height: 30px;
+
+
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+margin: 70px;
+}
+.age input{
+  width: 130px;
+  height: 45px;
+  border: 1px solid  rgb(84, 176, 215);
+  border-radius: 10px;
+  font-size: 25px;
+}
+.h33{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 70px;
+}
+
+.submit{
+  width: 250px;
+  height: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
