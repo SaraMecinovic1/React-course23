@@ -17,8 +17,21 @@ body{
   width: 500px;
   height: 650px;
   display: flex;
+  flex-direction: column;
   border: 2px solid rgb(50, 120, 160);
   border-radius: 15px;
+  
+}
+.firstPart{
+  width: 100%;
+  height: 90%;
+  display: flex;
+}
+.secondPart{
+  width: 100%;
+  height: 10%; 
+  display: flex;
+  justify-content: center;
   
 }
 .personIcon{
@@ -62,6 +75,7 @@ margin: 50px;
   border-radius: 10px;
   font-size: 25px;
   color: rgb(92, 91, 91);
+  text-align: center;
 }
 .h33{
   display: flex;
@@ -76,6 +90,35 @@ margin: 50px;
 }
 .zena{
   margin-top: 40px;
+}
+.secondPage{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.resultCard{
+  width: 300px;
+  height: 250px;
+  border: 2px solid rgb(50, 120, 160);
+  border-radius: 20px;
+  text-align: center;
+}
+.resultCard p{
+font-size: 25px;
+
+}
+.result h1{
+font-size: 50px;
+color: rgb(69, 69, 69);
+padding: 0;
+
+}
+.result h4{
+  font-size: 30px;
+
 }
 
 
