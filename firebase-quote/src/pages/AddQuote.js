@@ -5,47 +5,47 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { addQuote } from "../firebase";
 
 const newQuoteSchema = yup.object({
-  quoteText: yup
+  Quote: yup
     .string()
-    .required("quoteText je obavezno polje")
-    .min(6, "quoteText mora da ima najmanje 6 karaktera")
-    .max(100, "quoteText mora da ima najvise 50 karaktera"),
-  quoteAuthor: yup
+    .required("Quote je obavezno polje")
+    .min(6, "Quote mora da ima najmanje 6 karaktera")
+    .max(100, "Quote mora da ima najvise 50 karaktera"),
+  Author: yup
     .string()
-    .required("quoteAuthor je obavezno polje")
-    .min(4, "quoteAuthor mora da ima najmanje 6 karaktera")
-    .max(50, "quoteAuthor mora da ima najvise 50 karaktera"),
-  quoteSource: yup
+    .required("Author je obavezno polje")
+    .min(4, "Author mora da ima najmanje 6 karaktera")
+    .max(50, "Author mora da ima najvise 50 karaktera"),
+  Source: yup
     .string()
-    .required("quoteSource je obavezno polje")
-    .min(4, "quoteSource mora da ima najmanje 6 karaktera")
-    .max(200, "quoteSource mora da ima najvise 50 karaktera"),
+    .required("Source je obavezno polje")
+    .min(4, "Source mora da ima najmanje 6 karaktera")
+    .max(200, "Source mora da ima najvise 50 karaktera"),
 });
 
 const AddQuote = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("authToken");
+  // const token = localStorage.getItem("authToken");
 
   const submitForm = async (values) => {
     try {
       await addQuote(values);
       alert("Uspesno");
     } catch (err) {
-      console.log(err);
+      console.log(err, "error");
     }
   };
-  if (!token) {
-    return <Navigate to={"/login"} replace={true} />;
-  }
+  // if (!token) {
+  //   return <Navigate to={"/login"} replace={true} />;
+  // }
 
   return (
     <div className="add-quote-wrapper">
       <Formik
         initialValues={{
-          quoteText: "",
-          quoteAuthor: "",
-          quoteSource: "",
-          category: "",
+          Quote: "",
+          Author: "",
+          Source: "",
+         
         }}
         validationSchema={newQuoteSchema}
         onSubmit={(values) => submitForm(values)}>
@@ -61,40 +61,40 @@ const AddQuote = () => {
               <p>Text</p>
               <input
                 type="text"
-                name="quoteText"
-                onChange={handleChange("quoteText")}
-                value={values.quoteText}
+                name="Quote"
+                onChange={handleChange("Quote")}
+                value={values.Quote}
               />
               <p className="error-message">
-                {errors.quoteText && touched.quoteText && errors.quoteText}
+                {errors.Quote && touched.Quote && errors.Quote}
               </p>
             </div>
             <div>
               <p>Author</p>
               <input
                 type="text"
-                name="quoteAuthor"
-                onChange={handleChange("quoteAuthor")}
-                value={values.quoteAuthor}
+                name="Author"
+                onChange={handleChange("Author")}
+                value={values.Author}
               />
               <p className="error-message">
-                {errors.quoteAuthor &&
-                  touched.quoteAuthor &&
-                  errors.quoteAuthor}
+                {errors.Author &&
+                  touched.Author &&
+                  errors.Author}
               </p>
             </div>
             <div>
               <p>Source</p>
               <input
                 type="text"
-                name="quoteSource"
-                onChange={handleChange("quoteSource")}
-                value={values.quoteSource}
+                name="Source"
+                onChange={handleChange("Source")}
+                value={values.Source}
               />
               <p className="error-message">
-                {errors.quoteSource &&
-                  touched.quoteSource &&
-                  errors.quoteSource}
+                {errors.Source &&
+                  touched.Source &&
+                  errors.Source}
               </p>
             </div>
 

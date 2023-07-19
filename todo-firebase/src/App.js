@@ -5,24 +5,37 @@ import Box from "@mui/material/Box";
 import { ListItem, TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
+import { addToDoItem, getToDoList } from "./firebase";
+import { useEffect } from "react";
 
-const App = () => {
+function App() {
   const [input, setInput] = useState("");
   const [listItem, setListItem] = useState([]);
 
-  const handleDelete = (index) => {
-    const updatedTodos = [...listItem]; //pravimo kopiju naseg niza(itema)
-    updatedTodos.splice(index, 1); //uklanjamo 1 element pod tim indexom
-    setListItem(updatedTodos); //vratimo azururani niz
-  };
-  console.log(listItem);
+  const getAllItems=()=>{
+    getToDoList().then((data)=>{
+      setListItem(data)
+    })
+  }
+  useEffect(()=>{
+    getAllItems()
+  })
 
   const addNewTask = () => {
-    const newList = [...listItem];
-    newList.push(input);
-    setListItem(newList);
-    setInput("");
+    const itemData = {
+      title: input,
+      description: "",
+      date: new Date(),
+      done: false,
+    };
+
+    addToDoItem(itemData).then(() => {
+      getAllItems();
+      setInput("");
+    });
   };
+
+
 
   return (
     <div>
@@ -89,8 +102,8 @@ const App = () => {
           {listItem.map((item, index) => {
             return (
               <button key={index}>
-                {item}{" "}
-                <DeleteForeverRoundedIcon onClick={() => handleDelete(index)} />
+                {item.title}{" "}
+                {/* <DeleteForeverRoundedIcon onClick={() => handleDelete(index)} /> */}
               </button>
             );
           })}
@@ -103,6 +116,7 @@ const App = () => {
       </Box>
     </div>
   );
-};
+}
+
 
 export default App;
