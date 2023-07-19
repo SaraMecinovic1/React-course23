@@ -9,7 +9,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCMI0CtDi1rr0BTudaGmDRk77BuVLQjNBk",
@@ -18,13 +18,14 @@ const firebaseConfig = {
   storageBucket: "todo-list-4951f.appspot.com",
   messagingSenderId: "714559256008",
   appId: "1:714559256008:web:5187c8968b98eb3a36bcfd",
-  measurementId: "G-7S1JWTT698"
+  measurementId: "G-7S1JWTT698",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db= getFirestore(app)
+const db = getFirestore(app);
+export const auth = getAuth(app);
 
+// da ih prikazemo
 export const getToDoList = async () => {
   const todolistCollection = collection(db, "todo-list");
   const todolistResults = await getDocs(todolistCollection); //uzememo sve podatke iz kolekcije
@@ -36,7 +37,19 @@ export const getToDoList = async () => {
   return todolistList;
 };
 
+// da posaljemo obavezu
 export const addToDoItem = async (data) => {
   const result = await addDoc(collection(db, "todo-list"), data);
   return result;
+};
+
+export const deleteQuote = async (id) => {
+  const docRef = doc(db, "todo-list", id); //referenca tom podatku
+  return await deleteDoc(docRef); //deleteDoc === brisanje podatka iz baze
+};
+
+////////////////// AUTH ////////////////
+
+const register = async () => {
+  
 };

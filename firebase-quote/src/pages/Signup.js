@@ -3,9 +3,24 @@ import "../App.css";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { signUp } from "../firebase";
 
 const Signup = () => {
   const navigate = useNavigate();
+ 
+ const submitForm=async(values ) => {
+  try{
+    await signUp(values.email, values.password, values.fullName)
+    navigate("/");
+
+  }catch(err){
+    console.log(err, "error")
+  }
+            
+          console.log(values);
+        }
+  
+
 
   const Schema = yup.object({
     fullName: yup.string().min(3).required("Polje je obavezno!"),
@@ -14,30 +29,13 @@ const Signup = () => {
     confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
     //   .required("Polje je obavezno!"),
   });
-  console.log()
+
   return (
     <div className="allInfo">
       <Formik
         initialValues={{ fullName: "", email: "", password: "", confirmPassword: "" }}
-        onSubmit={(values, actions) => {
-            fetch("https://js-course-server.onrender.com/user/signup", {
-              method: "POST",
-              body: JSON.stringify(values),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.userId) {
-                  alert("Uspesna registracija");
-                  navigate("/");
-                } else {
-                  alert("Nije uspesna registracija");
-                  
-                }
-          });
-          console.log(values);
+        onSubmit={(values) => {
+          submitForm(values);
         }}
         validationSchema={Schema}
       >
@@ -108,6 +106,5 @@ const Signup = () => {
       </Formik>
     </div>
   );
-};
-
+                };
 export default Signup;

@@ -1,16 +1,18 @@
 import React from "react";
 import "./App.css";
-import { useState } from "react";
+import { useState,useParams } from "react";
 import Box from "@mui/material/Box";
 import { ListItem, TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
-import { addToDoItem, getToDoList } from "./firebase";
+import { addToDoItem, deleteQuote, getToDoList } from "./firebase";
 import { useEffect } from "react";
 
 function App() {
   const [input, setInput] = useState("");
   const [listItem, setListItem] = useState([]);
+  // const params = useParams();
+
 
   const getAllItems=()=>{
     getToDoList().then((data)=>{
@@ -27,7 +29,9 @@ function App() {
       description: "",
       date: new Date(),
       done: false,
+    
     };
+    console.log(itemData)
 
     addToDoItem(itemData).then(() => {
       getAllItems();
@@ -103,7 +107,7 @@ function App() {
             return (
               <button key={index}>
                 {item.title}{" "}
-                {/* <DeleteForeverRoundedIcon onClick={() => handleDelete(index)} /> */}
+                {/* <DeleteForeverRoundedIcon onClick={() => console.log("dele"))} /> */}
               </button>
             );
           })}

@@ -10,6 +10,7 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore";
+import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYbrlrBw3sCi_wz5OogHLCxF0AhVVmhOA",
@@ -24,6 +25,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig); // predstavlja inicijalizovanu Firebase aplikaciju.
 export const db = getFirestore(app); //pristup celoj aplikaciji,dokumentu, kolekciji ili upitu u bazi podataka
+export const auth = getAuth(app);
 
 export const getQuotes = async () => {
   const quotesCollection = collection(db, "quotes"); //iz koje kolekcije uzimam
@@ -64,3 +66,20 @@ export const addQuote = async (data) => {
   const result = await addDoc(collection(db, "quotes"), data);
   return result;
 };
+
+//////////////////// AUTH ////////////////
+
+export const signUp = async ({ email, password }) => {
+  try{
+    const userCredential = await createUserWithEmailAndPassword({
+      auth,
+      email,
+      password,
+    });
+
+  }catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message
+
+}
+}
