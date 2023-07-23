@@ -103,11 +103,11 @@ function App() {
         </Button>
 
         <div className="list">
-          {listItem.map((item, index) => {
+          {listItem.map((item) => {
             return (
-              <button key={index}>
+              <button key={item.id}>
                 {item.title}{" "}
-                {/* <DeleteForeverRoundedIcon onClick={() => console.log("dele"))} /> */}
+                <DeleteForeverRoundedIcon onClick={() => deleteQuote(item.id)} />
               </button>
             );
           })}
