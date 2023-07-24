@@ -10,7 +10,7 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore";
-import { getAuth,createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYbrlrBw3sCi_wz5OogHLCxF0AhVVmhOA",
@@ -76,10 +76,29 @@ export const signUp = async ({ email, password }) => {
       email,
       password,
     });
-
+    const user = userCredential.user;
+    console.log(user,"---sign in")
   }catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message
 
 }
 }
+
+export const login = async ({ email, password }) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  }
+};
+
+export const logout = async () => {
+  await signOut(auth);
+};

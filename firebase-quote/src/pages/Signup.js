@@ -7,20 +7,17 @@ import { signUp } from "../firebase";
 
 const Signup = () => {
   const navigate = useNavigate();
- 
- const submitForm=async(values ) => {
-  try{
-    await signUp(values.email, values.password, values.fullName)
-    navigate("/");
 
-  }catch(err){
-    console.log(err, "error")
-  }
-            
-          console.log(values);
-        }
-  
+  const submitForm = async (values) => {
+    try {
+      await signUp(values.email, values.password, values.fullName);
+      navigate("/");
+    } catch (err) {
+      console.log(err, "error");
+    }
 
+    console.log(values);
+  };
 
   const Schema = yup.object({
     fullName: yup.string().min(3).required("Polje je obavezno!"),
@@ -33,12 +30,16 @@ const Signup = () => {
   return (
     <div className="allInfo">
       <Formik
-        initialValues={{ fullName: "", email: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          fullName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
         onSubmit={(values) => {
           submitForm(values);
         }}
-        validationSchema={Schema}
-      >
+        validationSchema={Schema}>
         {({
           values,
           errors,
@@ -55,8 +56,7 @@ const Signup = () => {
                 type="fullName"
                 value={values.fullName}
                 onChange={handleChange}
-                onBlur={handleBlur}
-              ></input>
+                onBlur={handleBlur}></input>
               <p>{errors.fullName && touched.fullName && errors.fullName}</p>
             </div>
             <div className="email">
@@ -66,8 +66,7 @@ const Signup = () => {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
-                onBlur={handleBlur}
-              ></input>
+                onBlur={handleBlur}></input>
               <p>{errors.email && touched.email && errors.email}</p>
             </div>
             <div className="pasword">
@@ -77,8 +76,7 @@ const Signup = () => {
                 name="password"
                 value={values.password}
                 onChange={handleChange}
-                onBlur={handleBlur}
-              ></input>
+                onBlur={handleBlur}></input>
               <p>{errors.password && touched.password && errors.password}</p>
             </div>
             <div className="confirmPassword">
@@ -88,8 +86,7 @@ const Signup = () => {
                 name="confirmPassword"
                 value={values.confirmPassword}
                 onChange={handleChange}
-                onBlur={handleBlur}
-              ></input>
+                onBlur={handleBlur}></input>
               <p>
                 {errors.confirmPassword &&
                   touched.confirmPassword &&
@@ -97,7 +94,7 @@ const Signup = () => {
               </p>
             </div>
             <div className="button">
-              <button className="butt1" onClick={handleSubmit}  type="button">
+              <button className="butt1" onClick={handleSubmit} type="button">
                 Sign up!
               </button>
             </div>
@@ -106,5 +103,5 @@ const Signup = () => {
       </Formik>
     </div>
   );
-                };
+};
 export default Signup;
