@@ -131,7 +131,7 @@ function App() {
         <div>
           <Button onClick={() => handleChangeLanguage("en")}>English</Button>
           <Button onClick={() => handleChangeLanguage("rs")}>Srpski</Button>
-          <Button onClick={() => handleChangeLanguage("rs")}>Srpski-1-probagit add .</Button>
+          <Button onClick={() => handleChangeLanguage("rs")}>Srpski-2</Button>
         </div>
       </Box>
     </div>
